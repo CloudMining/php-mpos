@@ -47,7 +47,11 @@ if (! $statistics_ajax_refresh_interval = $setting->getValue('statistics_ajax_re
 if (! $statistics_ajax_long_refresh_interval = $setting->getValue('statistics_ajax_long_refresh_interval')) $statistics_ajax_long_refresh_interval = 10;
 
 // Small helper array
-$aHashunits = array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' );
+if ($config['algorithm'] == 'equihash') {
+  $aHashunits = array( '1000' => 'Sol/s', '1' => 'KSol/s', '0.001' => 'MSol/s', '0.000001' => 'GSol/s', '0.000000001' => 'TSol/s', '0.000000000001' => 'PSol/s', '0.000000000000001' => 'ESol/s' );
+} else {
+  $aHashunits = array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' );
+}
 
 // Global data for Smarty
 $aGlobal = array(
