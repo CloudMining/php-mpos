@@ -111,13 +111,22 @@ class Statistics extends Base {
         b.*,
         a.username AS finder,
         a.is_anonymous AS is_anonymous,
-        ROUND(difficulty * POW(2, 32 - " . $this->coin->getTargetBits() . "), 0) AS estshares
+        difficulty AS difficulty
       FROM " . $this->block->getTableName() . " AS b
       LEFT JOIN " . $this->user->getTableName() . " AS a
       ON b.account_id = a.id
       ORDER BY height DESC LIMIT ?");
-    if ($this->checkStmt($stmt) && $stmt->bind_param("i", $limit) && $stmt->execute() && $result = $stmt->get_result())
-      return $this->memcache->setCache(__FUNCTION__ . $limit, $result->fetch_all(MYSQLI_ASSOC), 5);
+    if ($this->checkStmt($stmt) && $stmt->bind_param("i", $limit) && $stmt->execute() && $result = $stmt->get_result()) {
+        $aData = array();
+
+        $count = 0;
+        while ($row = $result->fetch_assoc()) {
+          $aData[$count] = $row;
+          $aData[$count]['estshares'] = $this->coin->calcEstaimtedShares($row['difficulty']);
+          $count++;
+        }
+        return $this->memcache->setCache(__FUNCTION__ . $limit, $aData, 5);
+    }
     return $this->sqlError();
   }
 
@@ -134,14 +143,22 @@ class Statistics extends Base {
         b.*,
         a.username AS finder,
         a.is_anonymous AS is_anonymous,
-        ROUND(difficulty * POW(2, 32 - " . $this->coin->getTargetBits() . "), 4) AS estshares
+        difficulty AS difficulty
       FROM " . $this->block->getTableName() . " AS b
       LEFT JOIN " . $this->user->getTableName() . " AS a 
       ON b.account_id = a.id
       WHERE b.height <= ?
       ORDER BY height DESC LIMIT ?");
-    if ($this->checkStmt($stmt) && $stmt->bind_param("ii", $iHeight, $limit) && $stmt->execute() && $result = $stmt->get_result())
-      return $this->memcache->setCache(__FUNCTION__ . $iHeight . $limit, $result->fetch_all(MYSQLI_ASSOC), 5);
+    if ($this->checkStmt($stmt) && $stmt->bind_param("ii", $iHeight, $limit) && $stmt->execute() && $result = $stmt->get_result()) {
+        $aData = array();
+        $count = 0;
+        while ($row = $result->fetch_assoc()) {
+          $aData[$count] = $row;
+          $aData[$count]['estshares'] = $this->coin->calcEstaimtedShares($row['difficulty']);
+          $count++;
+        }
+        return $this->memcache->setCache(__FUNCTION__ . $iHeight . $limit, $aData, 5);
+    }
     return $this->sqlError();
   }
 
@@ -203,7 +220,7 @@ class Statistics extends Base {
   public function updateShareStatistics($aStats, $iBlockId) {
     $this->debug->append("STA " . __METHOD__, 4);
     $stmt = $this->mysqli->prepare("INSERT INTO $this->table (account_id, valid, invalid, block_id) VALUES (?, ?, ?, ?)");
-    if ($this->checkStmt($stmt) && $stmt->bind_param('iiii', $aStats['id'], $aStats['valid'], $aStats['invalid'], $iBlockId) && $stmt->execute()) return true;
+    if ($this->checkStmt($stmt) && $stmt->bind_param('iddi', $aStats['id'], $aStats['valid'], $aStats['invalid'], $iBlockId) && $stmt->execute()) return true;
     return $this->sqlError();
   }
 
@@ -213,7 +230,7 @@ class Statistics extends Base {
   public function insertPPLNSStatistics($aStats, $iBlockId) {
     $this->debug->append("STA " . __METHOD__, 4);
     $stmt = $this->mysqli->prepare("INSERT INTO $this->table (account_id, valid, invalid, pplns_valid, pplns_invalid, block_id) VALUES (?, ?, ?, ?, ?, ?)");
-    if ($this->checkStmt($stmt) && $stmt->bind_param('iiiiii', $aStats['id'], $aStats['valid'], $aStats['invalid'], $aStats['pplns_valid'], $aStats['pplns_invalid'], $iBlockId) && $stmt->execute()) return true;
+    if ($this->checkStmt($stmt) && $stmt->bind_param('iddddi', $aStats['id'], $aStats['valid'], $aStats['invalid'], $aStats['pplns_valid'], $aStats['pplns_invalid'], $iBlockId) && $stmt->execute()) return true;
     return $this->sqlError();
   }
 
