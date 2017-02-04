@@ -23,7 +23,7 @@
               <td>{$BLOCKDETAILS.height|number_format:"0"|default:"0"}</td>
               {/if}
               <td>Amount</td>
-              <td>{$BLOCKDETAILS.amount|number_format|default:"0"}</td>
+              <td>{$BLOCKDETAILS.amount|number_format:"4"|default:"0"}</td>
               <td>Confirmations</td>
               <td>{if $BLOCKDETAILS.confirmations >= $GLOBAL.confirmations}
               <font color="green">Confirmed</font>
@@ -38,7 +38,7 @@
               <td>Time</td>
               <td>{$BLOCKDETAILS.time|default:"0"}</td>
               <td>Shares</td>
-              <td>{$BLOCKDETAILS.shares|number_format:"0"|default:"0"}</td>
+              <td>{$BLOCKDETAILS.shares|number_format:$GLOBAL.config.sharediffprecision|default:"0"}</td>
               <td>Finder</td>
               <td>{$BLOCKDETAILS.finder|default:"unknown"}</td>
             </tr>

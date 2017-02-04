@@ -202,27 +202,51 @@ $aSettings['statistics'][] = array(
   'name' => 'statistics_show_block_average', 'value' => $setting->getValue('statistics_show_block_average'),
   'tooltip' => 'Show block average in block statistics page.'
 );
-$aSettings['statistics'][] = array(
-  'display' => 'Pool Hashrate Modifier', 'type' => 'select',
-  'options' => array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' ),
-  'default' => '1',
-  'name' => 'statistics_pool_hashrate_modifier', 'value' => $setting->getValue('statistics_pool_hashrate_modifier'),
-  'tooltip' => 'Auto-adjust displayed pool hashrates to a certain limit.'
-);
-$aSettings['statistics'][] = array(
-  'display' => 'Network Hashrate Modifier', 'type' => 'select',
-  'options' => array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' ),
-  'default' => '1',
-  'name' => 'statistics_network_hashrate_modifier', 'value' => $setting->getValue('statistics_network_hashrate_modifier'),
-  'tooltip' => 'Auto-adjust displayed network hashrates to a certain limit.'
-);
-$aSettings['statistics'][] = array(
-  'display' => 'Personal Hashrate Modifier', 'type' => 'select',
-  'options' => array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' ),
-  'default' => '1',
-  'name' => 'statistics_personal_hashrate_modifier', 'value' => $setting->getValue('statistics_personal_hashrate_modifier'),
-  'tooltip' => 'Auto-adjust displayed personal hashrates to a certain limit.'
-);
+if ($config['algorithm'] == 'equihash') {
+  $aSettings['statistics'][] = array(
+    'display' => 'Pool Hashrate Modifier', 'type' => 'select',
+    'options' => array( '1000' => 'Sol/s', '1' => 'KSol/s', '0.001' => 'MSol/s', '0.000001' => 'GSol/s', '0.000000001' => 'TSol/s', '0.000000000001' => 'PSol/s', '0.000000000000001' => 'ESol/s' ),
+    'default' => '1',
+    'name' => 'statistics_pool_hashrate_modifier', 'value' => $setting->getValue('statistics_pool_hashrate_modifier'),
+    'tooltip' => 'Auto-adjust displayed pool hashrates to a certain limit.'
+  );
+  $aSettings['statistics'][] = array(
+    'display' => 'Network Hashrate Modifier', 'type' => 'select',
+    'options' => array( '1000' => 'Sol/s', '1' => 'KSol/s', '0.001' => 'MSol/s', '0.000001' => 'GSol/s', '0.000000001' => 'TSol/s', '0.000000000001' => 'PSol/s', '0.000000000000001' => 'ESol/s' ),
+    'default' => '1',
+    'name' => 'statistics_network_hashrate_modifier', 'value' => $setting->getValue('statistics_network_hashrate_modifier'),
+    'tooltip' => 'Auto-adjust displayed network hashrates to a certain limit.'
+  );
+  $aSettings['statistics'][] = array(
+    'display' => 'Personal Hashrate Modifier', 'type' => 'select',
+    'options' => array( '1000' => 'Sol/s', '1' => 'KSol/s', '0.001' => 'MSol/s', '0.000001' => 'GSol/s', '0.000000001' => 'TSol/s', '0.000000000001' => 'PSol/s', '0.000000000000001' => 'ESol/s' ),
+    'default' => '1',
+    'name' => 'statistics_personal_hashrate_modifier', 'value' => $setting->getValue('statistics_personal_hashrate_modifier'),
+    'tooltip' => 'Auto-adjust displayed personal hashrates to a certain limit.'
+  );
+} else {
+  $aSettings['statistics'][] = array(
+    'display' => 'Pool Hashrate Modifier', 'type' => 'select',
+    'options' => array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' ),
+    'default' => '1',
+    'name' => 'statistics_pool_hashrate_modifier', 'value' => $setting->getValue('statistics_pool_hashrate_modifier'),
+    'tooltip' => 'Auto-adjust displayed pool hashrates to a certain limit.'
+  );
+  $aSettings['statistics'][] = array(
+    'display' => 'Network Hashrate Modifier', 'type' => 'select',
+    'options' => array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' ),
+    'default' => '1',
+    'name' => 'statistics_network_hashrate_modifier', 'value' => $setting->getValue('statistics_network_hashrate_modifier'),
+    'tooltip' => 'Auto-adjust displayed network hashrates to a certain limit.'
+  );
+  $aSettings['statistics'][] = array(
+    'display' => 'Personal Hashrate Modifier', 'type' => 'select',
+    'options' => array( '1' => 'KH/s', '0.001' => 'MH/s', '0.000001' => 'GH/s', '0.000000001' => 'TH/s', '0.000000000001' => 'PH/s', '0.000000000000001' => 'EH/s' ),
+    'default' => '1',
+    'name' => 'statistics_personal_hashrate_modifier', 'value' => $setting->getValue('statistics_personal_hashrate_modifier'),
+    'tooltip' => 'Auto-adjust displayed personal hashrates to a certain limit.'
+  );
+}
 $aSettings['statistics'][] = array(
   'display' => 'Enable Google analytics', 'type' => 'select',
   'options' => array( 0 => 'No', 1 => 'Yes' ),
