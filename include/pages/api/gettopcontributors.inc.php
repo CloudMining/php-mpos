@@ -10,23 +10,24 @@ if ( ! $interval = $setting->getValue('statistics_ajax_data_interval')) $interva
 // Fetch raw data
 $aContributorsHashes = $statistics->getTopContributors('hashes', 15);
 $aContributorsShares = $statistics->getTopContributors('shares', 15);
+$hashMods = $setting->getValue('statistics_personal_hashrate_modifier');
 
 // Honor the anonymous flag
 foreach ($aContributorsHashes as $iKey => $aData) {
   if ($user->isAdmin($user_id)) {
     $aContributorsHashes = array(
       'account' => $aData['account'],
-      'hashrate' => $aData['hashrate']
+      'hashrate' => round($aData['hashrate'] * $hashMods, 3)
     );
   } else if ($aData['is_anonymous'] == 1) {
     $aContributorsHashes = array(
       'account' => 'anonymous',
-      'hashrate' => $aData['hashrate']
+      'hashrate' => round($aData['hashrate'] * $hashMods, 3)
     );
   } else {
     $aContributorsHashes = array(
       'account' => $aData['account'],
-      'hashrate' => $aData['hashrate']
+      'hashrate' => round($aData['hashrate'], $hashMods, 3)
     );
   }
 }

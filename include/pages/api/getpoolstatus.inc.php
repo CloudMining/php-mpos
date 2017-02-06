@@ -48,7 +48,7 @@ if (!empty($aLastBlock)) {
 // Output JSON format
 $data = array(
   'pool_name' => $setting->getValue('website_name'),
-  'hashrate' => $iCurrentPoolHashrate,
+  'hashrate' => round($iCurrentPoolHashrate * $setting->getValue('statistics_pool_hashrate_modifier'), 3),
   'efficiency' => $dEfficiency,
   'progress' => $dEstPercent,
   'workers' => $worker->getCountAllActiveWorkers(),

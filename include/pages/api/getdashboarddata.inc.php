@@ -66,9 +66,9 @@ $aRoundShares['valid'] + $aRoundShares['invalid'] > 0 ? $dPoolInvalidPercent = r
 $aUserRoundShares['valid'] + $aUserRoundShares['valid'] > 0 ? $dUserInvalidPercent = round($aUserRoundShares['invalid'] / ($aUserRoundShares['valid'] + $aUserRoundShares['invalid']) * 100, 2) : $dUserInvalidPercent = 0;
 
 // Apply pool modifiers
-$dPersonalHashrateAdjusted = $dPersonalHashrate * $dPersonalHashrateModifier;
-$dPoolHashrateAdjusted = $dPoolHashrate * $dPoolHashrateModifier;
-$dNetworkHashrateAdjusted = $dNetworkHashrate / 1000 * $dNetworkHashrateModifier;
+$dPersonalHashrateAdjusted = round($dPersonalHashrate * $dPersonalHashrateModifier, 3);
+$dPoolHashrateAdjusted = round($dPoolHashrate * $dPoolHashrateModifier, 3);
+$dNetworkHashrateAdjusted = round($dNetworkHashrate / 1000 * $dNetworkHashrateModifier, 3);
 
 // Coin price
 $aPrice = $setting->getValue('price');

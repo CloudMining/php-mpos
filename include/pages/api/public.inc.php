@@ -15,7 +15,7 @@ $bitcoin->can_connect() === true ? $dNetworkHashrate = $bitcoin->getnetworkhashp
 echo json_encode(
   array(
     'pool_name' => $setting->getValue('website_name'),
-    'hashrate' => $statistics->getCurrentHashrate(),
+    'hashrate' => round($statistics->getCurrentHashrate() * $setting->getValue('statistics_pool_hashrate_modifier'), 3),
     'workers' => $worker->getCountAllActiveWorkers(),
     'shares_this_round' => $aShares['valid'],
     'last_block' => $aLastBlock['height'],
