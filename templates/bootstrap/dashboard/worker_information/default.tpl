@@ -9,7 +9,7 @@
          <thead>
           <tr>
             <th>Worker</th>
-            <th>Hashrate</th>
+            <th>{$GLOBAL.hashunits.personal}</th>
             <th>Difficulty</th>
           </tr>
           </thead>

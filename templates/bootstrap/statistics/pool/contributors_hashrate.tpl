@@ -30,7 +30,7 @@
               <td>{$rank++}</td>
               <td>{if $CONTRIBHASHES[contrib].donate_percent|default:"0" >= 2}<i class="fa fa-trophy fa-fw"></i>{elseif $CONTRIBHASHES[contrib].donate_percent|default:"0" < 2 AND $CONTRIBHASHES[contrib].donate_percent|default:"0" > 0}<i class="fa fa-star-o fa-fw"></i>{else}<i class="fa fa-ban fa-fw"></i>{/if}</td>
               <td>{if $CONTRIBHASHES[contrib].is_anonymous|default:"0" == 1 && $GLOBAL.userdata.is_admin|default:"0" == 0}anonymous{else}{$CONTRIBHASHES[contrib].account|escape}{/if}</td>
-              <td class="text-right">{$CONTRIBHASHES[contrib].hashrate * $GLOBAL.hashmods.personal|number_format:"3"}</td>
+              <td class="text-right">{($CONTRIBHASHES[contrib].hashrate * $GLOBAL.hashmods.personal)|number_format:"3"}</td>
               <td class="text-right">{$estday|number_format:"4"}</td>
               {if $GLOBAL.config.price.enabled}
               {if $GLOBAL.config.price.currency}<td class="text-right">{($estday * $GLOBAL.price)|default:"n/a"|number_format:"4"}</td>{/if}

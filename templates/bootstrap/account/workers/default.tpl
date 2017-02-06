@@ -68,7 +68,7 @@
                  </td>
                  {/if}
                  {math assign="workersHashrate" equation="hashrate * hashmod" hashrate=$WORKERS[worker].hashrate hashmod=$GLOBAL.hashmods.personal}
-                 <td class="text-right">{$workersHashrate|number_format:"3"}</td>
+                 <td class="text-right">{$workersHashrate|number_format}</td>
                  <td class="text-right">{$WORKERS[worker].difficulty|number_format:$GLOBAL.config.sharediffprecision}</td>
                  <td class="text-center"><a href="{$smarty.server.SCRIPT_NAME}?page={$smarty.request.page|escape}&action={$smarty.request.action|escape}&do=delete&id={$WORKERS[worker].id|escape}&ctoken={$CTOKEN|escape|default:""}"><i class="fa fa-trash-o fa-fw"></i></a></td>
                </tr>
