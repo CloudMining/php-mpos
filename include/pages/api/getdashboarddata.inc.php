@@ -41,11 +41,11 @@ if ( ! $dNetworkHashrateModifier = $setting->getValue('statistics_network_hashra
 
 // Fetch raw data
 $statistics->setGetCache(false);
-$dPoolHashrate = $statistics->getCurrentHashrate($interval);
-if ($dPoolHashrate > $dNetworkHashrate) $dNetworkHashrate = $dPoolHashrate;
+$dPoolHashrate = round($statistics->getCurrentHashrate($interval), 6);
+if ($dPoolHashrate > $dNetworkHashrate / 1000) $dNetworkHashrate = $dPoolHashrate * 1000;
 $aUserMiningStats = $statistics->getUserMiningStats($username, $user_id, $interval);
-$dPersonalHashrate = $aUserMiningStats['hashrate'];
-$dPersonalSharerate = $aUserMiningStats['sharerate'];
+$dPersonalHashrate = round($aUserMiningStats['hashrate'], 6);
+$dPersonalSharerate = round($aUserMiningStats['sharerate'], 6);
 $dPersonalShareDifficulty = $aUserMiningStats['avgsharediff'];
 $statistics->setGetCache(true);
 
@@ -66,9 +66,9 @@ $aRoundShares['valid'] + $aRoundShares['invalid'] > 0 ? $dPoolInvalidPercent = r
 $aUserRoundShares['valid'] + $aUserRoundShares['valid'] > 0 ? $dUserInvalidPercent = round($aUserRoundShares['invalid'] / ($aUserRoundShares['valid'] + $aUserRoundShares['invalid']) * 100, 2) : $dUserInvalidPercent = 0;
 
 // Apply pool modifiers
-$dPersonalHashrateAdjusted = round($dPersonalHashrate * $dPersonalHashrateModifier, 3);
-$dPoolHashrateAdjusted = round($dPoolHashrate * $dPoolHashrateModifier, 3);
-$dNetworkHashrateAdjusted = round($dNetworkHashrate / 1000 * $dNetworkHashrateModifier, 3);
+$dPersonalHashrateAdjusted = $dPersonalHashrate * $dPersonalHashrateModifier;
+$dPoolHashrateAdjusted = $dPoolHashrate * $dPoolHashrateModifier;
+$dNetworkHashrateAdjusted = $dNetworkHashrate / 1000 * $dNetworkHashrateModifier;
 
 // Coin price
 $aPrice = $setting->getValue('price');
