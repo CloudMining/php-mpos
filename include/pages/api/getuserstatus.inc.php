@@ -21,7 +21,7 @@ $aUserMiningStats = $statistics->getUserMiningStats($username, $user_id, $interv
 $data = array(
   'username' => $username,
   'shares' =>  $statistics->getUserShares($username, $user_id),
-  'hashrate' => $aUserMiningStats['hashrate'],
+  'hashrate' => round($aUserMiningStats['hashrate'] * $setting->getValue('statistics_personal_hashrate_modifier'), 3),
   'sharerate' => $aUserMiningStats['sharerate']
 );
 echo $api->get_json($data);

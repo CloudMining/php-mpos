@@ -128,7 +128,7 @@ class Worker extends Base {
       $row = $result->fetch_assoc();
       $row['hashrate'] = round($this->coin->calcHashrate($row['shares'], $interval), 3);
       if ($row['count_all'] > 0) {
-        $row['difficulty'] = round($row['shares'] / $row['count_all'], $GLOBAL.config.sharediffprecision);
+        $row['difficulty'] = round($row['shares'] / $row['count_all'], 2);
       } else {
         $row['difficulty'] = 0.00;
       }
@@ -173,9 +173,9 @@ class Worker extends Base {
     if ($this->checkStmt($stmt) && $stmt->bind_param('iiiii', $interval, $interval, $interval, $interval, $account_id) && $stmt->execute() && $result = $stmt->get_result()) {
       $aData = array();
       while ($row = $result->fetch_assoc()) {
-        $row['hashrate'] = round($this->coin->calcHashrate($row['shares'], $interval), 3);
+        $row['hashrate'] = round($this->coin->calcHashrate($row['shares'], $interval) * 1000, 6);
         if ($row['count_all'] > 0) {
-          $row['difficulty'] = round($row['shares'] / $row['count_all'], $GLOBAL.config.sharediffprecision);
+          $row['difficulty'] = round($row['shares'] / $row['count_all'], 2);
         } else {
           $row['difficulty'] = 0.00;
         }
@@ -225,7 +225,7 @@ class Worker extends Base {
       while ($row = $result->fetch_assoc()) {
         $row['hashrate'] = round($this->coin->calcHashrate($row['shares'], $interval), 3);
         if ($row['count_all'] > 0) {
-          $row['avg_difficulty'] = round($row['shares'] / $row['count_all'], $GLOBAL.config.sharediffprecision);
+          $row['avg_difficulty'] = round($row['shares'] / $row['count_all'], 2);
         } else {
           $row['avg_difficulty'] = 0.00;
         }

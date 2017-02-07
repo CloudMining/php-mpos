@@ -182,10 +182,10 @@ CREATE TABLE IF NOT EXISTS `statistics_shares` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `account_id` int(10) unsigned NOT NULL,
   `block_id` int(10) unsigned NOT NULL,
-  `valid` double NOT NULL,
-  `invalid` double NOT NULL DEFAULT '0',
-  `pplns_valid` double NOT NULL,
-  `pplns_invalid` double NOT NULL DEFAULT '0',
+  `valid` decimal(65,4) DEFAULT '0.0000',
+  `invalid` decimal(65,4) DEFAULT '0.0000',
+  `pplns_valid` decimal(65,4) DEFAULT '0.0000',
+  `pplns_invalid` decimal(65,4) DEFAULT '0.0000',
   PRIMARY KEY (`id`),
   KEY `account_id` (`account_id`),
   KEY `block_id` (`block_id`)
@@ -242,7 +242,7 @@ CREATE TABLE `statistics_users` (
   `account_id` int(11) NOT NULL,
   `hashrate` bigint(20) unsigned NOT NULL,
   `workers` int(11) NOT NULL,
-  `sharerate` float NOT NULL,
+  `sharerate` decimal(10,4) DEFAULT '0.0000',
   `timestamp` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `account_id_timestamp` (`account_id`,`timestamp`)

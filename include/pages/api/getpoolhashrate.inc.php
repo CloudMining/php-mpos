@@ -12,7 +12,7 @@ if ( ! $interval = $setting->getValue('statistics_ajax_data_interval')) $interva
 
 // Output JSON format
 $statistics->setGetCache(false);
-$dPoolHashrate = $statistics->getCurrentHashrate($interval);
+$dPoolHashrate = round($statistics->getCurrentHashrate($interval) * $setting->getValue('statistics_pool_hashrate_modifier'), 3);
 $statistics->setGetCache(true);
 
 echo $api->get_json($dPoolHashrate);

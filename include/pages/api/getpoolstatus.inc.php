@@ -32,7 +32,7 @@ $iCurrentPoolHashrate =  $statistics->getCurrentHashrate();
 if ($iCurrentPoolHashrate > $dNetworkHashrate) $dNetworkHashrate = $iCurrentPoolHashrate;
 
 // Time in seconds, not hours, using modifier in smarty to translate
-$iCurrentPoolHashrate > 0 ? $iEstTime = $dDifficulty * pow(2,32) / ($iCurrentPoolHashrate * 1000) : $iEstTime = 0;
+$iCurrentPoolHashrate > 0 ? $iEstTime = $statistics->getExpectedTimePerBlock('pool', $iCurrentPoolHashrate) : $iEstTime = 0;
 $iEstShares = $statistics->getEstimatedShares($dDifficulty);
 // For mpos-bot PoolLuck
 $iEstShares > 0 && $aShares['valid'] > 0 ? $dEstPercent = round(100 / $iEstShares * $aShares['valid'], 2) : $dEstPercent = 0;
@@ -48,7 +48,7 @@ if (!empty($aLastBlock)) {
 // Output JSON format
 $data = array(
   'pool_name' => $setting->getValue('website_name'),
-  'hashrate' => $iCurrentPoolHashrate,
+  'hashrate' => round($iCurrentPoolHashrate * $setting->getValue('statistics_pool_hashrate_modifier'), 3),
   'efficiency' => $dEfficiency,
   'progress' => $dEstPercent,
   'workers' => $worker->getCountAllActiveWorkers(),
