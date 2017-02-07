@@ -30,9 +30,9 @@
             <td>{$BLOCKDETAILS.height|number_format:"0"|default:"0"}</td>
             {/if}
             <td>PPLNS Shares</td>
-            <td>{$PPLNSSHARES|number_format:"0"|default:"0"}</td>
+            <td>{$PPLNSSHARES|number_format:$GLOBAL.config.sharediffprecision|default:"0"}</td>
             <td>Estimated Shares</td>
-            <td>{$BLOCKDETAILS.estshares|number_format|default:"0"}</td>
+            <td>{$BLOCKDETAILS.estshares|number_format:$GLOBAL.config.sharediffprecision|default:"0"}</td>
           </tr>
           <tr class="odd">
             <td>Amount</td>
@@ -45,7 +45,7 @@
             {else if $BLOCKDETAILS.confirmations == 0}0
             {else}{($GLOBAL.confirmations - $BLOCKDETAILS.confirmations)|default:"0"} left{/if}</td>
             <td>Block Average</td>
-            <td>{$BLOCKAVERAGE|number_format:"0"|default:"0"}</td>
+            <td>{$BLOCKAVERAGE|number_format:$GLOBAL.config.sharediffprecision|default:"0"}</td>
             <td>Average Efficiency</td>
             <td>{math assign="percentage2" equation=(($BLOCKDETAILS.estshares / $BLOCKAVERAGE) * 100)}<font color="{if ($percentage2 >= 100)}green{else}red{/if}">{$percentage2|number_format:"2"} %</font></td>
           </tr>
@@ -61,7 +61,7 @@
           </tr>
           <tr class="odd">
             <td>Shares</td>
-            <td>{$BLOCKDETAILS.shares|number_format:"0"|default:"0"}</td>
+            <td>{$BLOCKDETAILS.shares|number_format:$GLOBAL.config.sharediffprecision|default:"0"}</td>
             <td>Finder</td>
             <td>{$BLOCKDETAILS.finder|default:"unknown"}</td>
             <td>Seconds This Round</td>
